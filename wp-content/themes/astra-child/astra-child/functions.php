@@ -23,3 +23,15 @@ function child_enqueue_styles() {
 }
 
 add_action( 'wp_enqueue_scripts', 'child_enqueue_styles', 15 );
+
+function hide_admin() {
+    if (!is_user_logged_in()) {
+        echo '<style>';
+        echo '.menu-item-224 {
+            display:none !important;
+        }';
+        echo '</style>';
+    }
+}
+
+add_filter('wp_head', 'hide_admin');
