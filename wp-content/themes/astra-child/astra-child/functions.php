@@ -1,3 +1,4 @@
+
 <?php
 /**
  * astra child Theme functions and definitions
@@ -33,5 +34,3 @@ function hide_admin() {
         echo '</style>';
     }
 }
-
-add_filter('wp_head', 'hide_admin');
