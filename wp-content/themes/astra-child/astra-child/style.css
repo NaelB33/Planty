@@ -9,3 +9,415 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: astra-child
 Template: astra
 */
+
+.ast-builder-menu .main-navigation > ul > li:last-child a {
+    margin-right: 0;
+    background-color: #DC9F96;
+    height: 110px;
+    width: 236px;
+    justify-content: center;
+    display: flex;
+    color: #FFFFFF;
+}
+
+
+.site-primary-footer-wrap[data-section="section-primary-footer-builder"] {
+    display: grid;
+    background-color: white;
+}
+
+.elementor-97 .elementor-element.elementor-element-1bf4646 .wpr-button[type="submit"] {
+    background-color: #E0B9B4;
+    color: #ffffff;
+    width: 10px;
+}
+
+.menu-toggle, button, .ast-button, .ast-custom-button, .button, input#submit, input[type="button"], input[type="submit"], input[type="reset"], #comments .submit, .search .search-submit, form[CLASS*="wp-block-search__"].wp-block-search .wp-block-search__inside-wrapper .wp-block-search__button, body .wp-block-file .wp-block-file__button, .search .search-submit, .woocommerce-js a.button, .woocommerce button.button, .woocommerce .woocommerce-message a.button, .woocommerce #respond input#submit.alt, .woocommerce input.button.alt, .woocommerce input.button, .woocommerce input.button:disabled, .woocommerce input.button:disabled[disabled], .woocommerce input.button:disabled:hover, .woocommerce input.button:disabled[disabled]:hover, .woocommerce #respond input#submit, .woocommerce button.button.alt.disabled, .wc-block-grid__products .wc-block-grid__product .wp-block-button__link, .wc-block-grid__product-onsale, [CLASS*="wc-block"] button, .woocommerce-js .astra-cart-drawer .astra-cart-drawer-content .woocommerce-mini-cart__buttons .button:not(.checkout):not(.ast-continue-shopping), .woocommerce-js .astra-cart-drawer .astra-cart-drawer-content .woocommerce-mini-cart__buttons a.checkout, .woocommerce button.button.alt.disabled.wc-variation-selection-needed, [CLASS*="wc-block"] .wc-block-components-button {
+    color: white;
+    background-color: #E0B9B4;
+    border-radius: 0px 0px 0px 0px;
+}
+
+label {
+    color: white;
+}
+
+
+.wpcf7 .wpcf7-form-control-wrap {
+    width: 100%;
+    display: block;
+    margin-right: 100px;
+}
+
+.wpcf7 form {
+    position: relative;
+}
+
+.elementor-97 .elementor-element.elementor-element-42f782f {
+    --display: flex;
+    --background-transition: 0.3s;
+    background-image: url(image/imageback.png);
+    background-repeat: no-repeat;
+    background-position: right bottom;
+    background-size: auto;
+}
+
+/* .elementor-element-120081f {    
+    background-color: #ECE2DA;
+    box-shadow: 0 10px 0 red;
+    border-radius: 0 0 5% 5%;
+} */
+
+.wpcf7.icf7s-211 .icf7s-button .wpcf7-submit {
+    width: 198px !important;
+    height: 55px !important;
+    max-width: 200px;
+    min-width: 196px;
+}
+
+.elementor-17 .elementor-element.elementor-element-120081f {
+    background-color: #ECE2DA;
+    box-shadow: 0 10px 0 #E0B9B4;
+    border-radius: 0 0 5% 5%;
+}
+
+/* body .elementor hr {
+    background-color: white;
+    margin: 0;
+    transform: rotate(90deg);
+    width: 100%;
+    position: relative;
+} */
+
+form.fluent_form_3 .wpf_has_custom_css.ff-btn-submit {
+    background-color: rgba(224, 185, 180, 1);
+    border-color: rgba(224, 185, 180, 1);
+    color: #ffffff;
+    width: 198px;
+    height: 60px;
+}
+
+.inputnom {
+    width: 200px;
+    position: relative;
+    left: 450px;
+}
+
+.inputadresse {
+    width: 200px;
+    position: relative;
+    right: 50px;
+}
+
+.inputcode {
+    width: 200px;
+    position: relative;
+    right: 50px;
+}
+
+.inputmail {
+    width: 200px;
+    position: relative;
+    left: 450px;
+}
+
+.inputville {
+    width: 200px;
+    position: relative;
+    right: 50px;
+}
+
+
+.inputprenom {
+    width: 200px;
+    position: relative;
+    left: 450px;
+}
+
+.separateurverti {
+    background-color: white;
+    margin: 0;
+    position: relative;
+    left: 75px;
+    width: 1px;
+    padding-bottom: 125px;
+    top: 85px;
+    bottom: 50px;
+}
+
+.qtefraise {
+    width: 39px;
+    height: 50px;
+    position: relative;
+    left: 170px;
+}
+
+.qtepamp {
+    width: 39px;
+    height: 50px;
+    position: relative;
+    left: 170px;
+}
+.qteframboise {
+    width: 39px;
+    height: 50px;
+    position: relative;
+    left: 170px;
+}
+.qtecitron {
+    width: 39px;
+    height: 50px;
+    position: relative;
+    left: 170px;
+}
+
+.titrelivraison {
+    position: relative;
+    right: 50px;
+    top: 20px;
+}
+
+.titreinfo {
+    position: relative;
+    top: 20px;
+}
+
+.pBrooke{
+    position: relative;
+    left: 10px;
+}
+
+.pSylvie {
+    position: relative;
+    left: 10px;
+}
+
+.pMegane {
+    position: relative;
+    left: 25px;
+}
+
+.brancheback {
+    background-image: url(image/branchedroite.png);
+    background-repeat: no-repeat;
+    background-position: center right 270px;
+    background-size: 300px;
+}
+
+@media screen and (max-width: 1024px ){
+    .post-page-head-area .bauhaus {
+    text-align: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    text-shadow: none;
+    text-transform: capitalize;
+    position: relative;
+    overflow: hidden;
+    z-index: 0;
+    visibility: hidden;
+}
+    
+
+    .elementor-97 .elementor-element.elementor-element-42f782f {
+        --display: flex;
+        --background-transition: 0.3s;
+        background-image: url(image/imageback.png);
+        background-repeat: no-repeat;
+        background-position: right bottom;
+        background-size: 0px;
+    }
+
+    .brancheback {
+        background-image: url(image/branchedroite.png);
+        background-repeat: no-repeat;
+        background-position: center right 200px;
+        background-size: 260px;
+    }
+
+    .qtefraise {
+        width: 39px;
+        height: 50px;
+        position: relative;
+        left: 110px;
+    }
+
+    .qtepamp {
+        width: 39px;
+        height: 50px;
+        position: relative;
+        left: 250px;
+    }
+
+    .qteframboise {
+        width: 39px;
+        height: 50px;
+        position: relative;
+        left: 390px;
+    }
+
+    .qtecitron {
+        width: 39px;
+        height: 50px;
+        position: relative;
+        left: 520px;
+    }
+
+    .titreinfo {
+        position: relative;
+        top: 20px;
+        left: 135px;
+    }
+
+    .titrelivraison {
+        position: relative;
+        left: 270px;
+        top: 20px;
+    }
+
+    form.fluent_form_3 .wpf_has_custom_css.ff-btn-submit {
+        background-color: rgba(224, 185, 180, 1);
+        border-color: rgba(224, 185, 180, 1);
+        color: #ffffff;
+        width: 198px;
+        height: 60px;
+        position: relative;
+        left: 210px;
+    }
+
+    .inputprenom {
+        width: 200px;
+        position: relative;
+        left: 180px;
+    }
+
+    .inputcode {
+        width: 200px;
+        position: relative;
+        left: 265px;
+    }
+
+    .inputville {
+        width: 200px;
+        position: relative;
+        left: 265px;
+    }
+
+    .inputmail {
+        width: 200px;
+        position: relative;
+        left: 180px;
+    }
+
+    .inputadresse {
+        width: 200px;
+        position: relative;
+        left: 265px;
+    }
+
+    .inputnom {
+        width: 200px;
+        position: relative;
+        left: 180px;
+    }
+
+    .separateurverti {
+        background-color: white;
+        margin: 0;
+        position: relative;
+        left: 215px;
+        width: 1px;
+        padding-bottom: 125px;
+        top: 85px;
+        bottom: 50px;
+    }
+
+    .separateurhori {
+        position: relative;
+        margin-right: -900px;
+        max-width: 1014px;
+    }
+
+}
+
+@media screen and (max-width: 320px ){
+    .elementor-97 .elementor-element.elementor-element-42f782f {
+        --display: flex;
+        --background-transition: 0.3s;
+        background-image: url(image/imageback.png);
+        background-repeat: no-repeat;
+        background-position: right bottom;
+        background-size: 30px;
+    }
+
+    .brancheback {
+        background-image: url(image/branchedroite.png);
+        background-repeat: no-repeat;
+        background-position: bottom;
+        background-size: 50px;
+    }
+
+    .separateurhori {
+        position: relative;
+        max-width: 310px;
+    
+    }
+
+    .qtecitron {
+        width: 39px;
+        height: 50px;
+        position: relative;
+
+    }
+
+
+
+}
+
+@media screen and (max-width: 768px ) {
+    .brancheback {
+        background-image: url(image/branchedroite.png);
+        background-repeat: no-repeat;
+        background-position-x: 390px;
+        background-position-y: 203px;
+        background-size: 250px;
+    }
+
+    .pBrooke{
+        position: relative;
+        left: 10px;
+    }
+
+    .separateurhori {
+        position: relative;
+        margin-right: -900px;
+        max-width: 758px;
+    }
+
+    .qtecitron {
+        width: 39px;
+        height: 50px;
+        position: relative;
+        left: 300px;
+    }
+    .qteframboise {
+        width: 39px;
+        height: 50px;
+        position: relative;
+        left: 230px;
+    }
+
+    .qtepamp {
+        width: 39px;
+        height: 50px;
+        position: relative;
+        left: 150px;
+    }
+
+    .qtefraise {
+        width: 39px;
+        height: 50px;
+        position: relative;
+        left: 70px;
+    }
+
+}
