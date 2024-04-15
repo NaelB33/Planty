@@ -13,6 +13,7 @@ Template: astra
 .ast-builder-menu .main-navigation > ul > li:last-child a {
     margin-right: 0;
     background-color: #DC9F96;
+    background-color: aqua;
     height: 110px;
     width: 236px;
     justify-content: center;
