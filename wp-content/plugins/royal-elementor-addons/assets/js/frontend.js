@@ -170,7 +170,7 @@
 
 					var distanceFromTop = $scope.offset().top;
 
-					if ( $scope.data('settings').sticky_animation ) {
+					if ( $scope.data('settings') && $scope.data('settings').sticky_animation ) {
 						stickyAnimation = $scope.data('settings').sticky_animation;
 					} else {
 						stickyAnimation = $scope.find('.wpr-sticky-section-yes-editor').attr('data-wpr-sticky-animation');
@@ -370,7 +370,6 @@
 					}
 
 					if ( 'yes' == $scope.data('wpr-replace-header') ) {
-                        console.log($scope.next());
                         if ( 0 != $scope.next().length ) {
                             $scope.next().get(0).style.setProperty('--wpr-animation-duration', stickyAnimDuration);
                         }
@@ -743,8 +742,8 @@
 				subMenuDeep = $navMenu.find( '.wpr-sub-menu li.menu-item-has-children' );
 
 			if ( $scope.find('.wpr-mobile-toggle').length ) {
-				$scope.find('a').on('click', function() {
-					if (this.pathname == window.location.pathname && !($(this).parent('li').children().length > 1)) {
+				$scope.find('a').on('click', function() { // GOGA - sub mega menu condition needs testing
+                    if ( this.pathname == window.location.pathname && !($(this).parent('li').children().length > 1)  && !($(this).closest('.wpr-sub-mega-menu').length > 0) ) {
 						$scope.find('.wpr-mobile-toggle').trigger('click');
 					}
 				});
@@ -832,7 +831,7 @@
 			var mobileMenu = $mobileNavMenu.find( '.wpr-mobile-nav-menu' );
 
 			// Toggle Button
-			$mobileNavMenu.find( '.wpr-mobile-toggle' ).on( 'click', function() {
+			$mobileNavMenu.find( '.wpr-mobile-toggle' ).on( 'click', function(e) {
 				// Change Toggle Text
 				if ( ! $(this).hasClass('wpr-mobile-toggle-open') ) {
 					$(this).addClass('wpr-mobile-toggle-open');
@@ -1034,13 +1033,20 @@
 
 			// Full Width Dropdown
 			function fullWidthMobileDropdown() {
-				if ( ! $scope.hasClass( 'wpr-mobile-menu-full-width' ) || ! $scope.closest('.elementor-column').length ) {
+				if ( ! $scope.hasClass( 'wpr-mobile-menu-full-width' ) || (! $scope.closest('.elementor-column').length && ! $scope.closest('.e-con').length) ) {
 					return;
 				}
+				
+				var topSection = $scope.closest('.elementor-top-section').length ? $scope.closest('.elementor-top-section') : $scope.closest('.e-con-inner');
 
-				var eColumn   = $scope.closest('.elementor-column'),
-					mWidth 	  = $scope.closest('.elementor-top-section').outerWidth() - 2 * mobileMenu.offset().left,
+				var eColumn   =$scope.closest('.elementor-column').length ? $scope.closest('.elementor-column') : $scope.closest('.elementor-element'),
+					mWidth 	  = topSection.outerWidth() - 2 * mobileMenu.offset().left,
 					mPosition = eColumn.offset().left + parseInt(eColumn.css('padding-left'), 10);
+
+				if ( topSection.hasClass('e-con-inner') ) {
+					mPosition = eColumn.offset().left - 2 * parseInt(topSection.parent().css('padding-left'), 10);
+					mWidth = topSection.outerWidth() - 2 * parseInt(topSection.parent().css('padding-left'), 10);
+				}
 
 				mobileMenu.parent('div').css({
 					'width' : mWidth +'px',
@@ -1314,135 +1320,143 @@
 				});
 
 				// Infinite Scroll / Load More
-				if ( ( 'load-more' === settings.pagination_type || 'infinite-scroll' === settings.pagination_type ) && ( $scope.find( '.wpr-grid-pagination' ).length && ! WprElements.editorCheck() ) ) {
-					
-					var pagination = $scope.find( '.wpr-grid-pagination' ),
-						scopeClass = '.elementor-element-'+ $scope.attr( 'data-id' );
+				if ( 'load-more' === settings.pagination_type || 'infinite-scroll' === settings.pagination_type ) {
+					if ( $scope.find( '.wpr-grid-pagination' ).length && ! WprElements.editorCheck() ) {
+						var pagination = $scope.find( '.wpr-grid-pagination' ),
+							scopeClass = '.elementor-element-'+ $scope.attr( 'data-id' );
 
-					var navClass = false,
-						threshold = false;
+						var navClass = false,
+							threshold = false;
 
-					if ( 'infinite-scroll' === settings.pagination_type ) {
-						threshold = 300;
-						navClass = scopeClass +' .wpr-load-more-btn';
-					}
-
-					iGrid.infiniteScroll({
-						path: scopeClass +' .wpr-grid-pagination a',
-						hideNav: navClass,
-						append: false,
-		  				history: false,
-		  				scrollThreshold: threshold,
-		  				status: scopeClass +' .page-load-status',
-		  				onInit: function() {
-							this.on( 'load', function() {
-								iGrid.removeClass( 'grid-images-loaded' );
-							});
+						if ( 'infinite-scroll' === settings.pagination_type ) {
+							threshold = 300;
+							navClass = scopeClass +' .wpr-load-more-btn';
 						}
-					});
 
-					// Request
-					iGrid.on( 'request.infiniteScroll', function( event, path ) {
-						pagination.find( '.wpr-load-more-btn' ).hide();
-						pagination.find( '.wpr-pagination-loading' ).css( 'display', 'inline-block' );
-					});
-
-					// Load
-					var pagesLoaded = 0;
-
-					iGrid.on( 'load.infiniteScroll', function( event, response ) {
-						pagesLoaded++;
-
-						// get posts from response
-						var items = $( response ).find( scopeClass ).find( '.wpr-grid-item' );
-
-						if ( $scope.find('.woocommerce-result-count').length ) {
-							var resultCount = $scope.find('.woocommerce-result-count').text();
-							var updatedResultCount = resultCount.replace( /\d\u2013\d+/, '1\u2013' + ( $scope.find('.wpr-grid-item').length + items.length ) );
-							$scope.find('.woocommerce-result-count').text(updatedResultCount);
-						}
-						
-						iGrid.infiniteScroll( 'appendItems', items );
-						iGrid.isotopewpr( 'appended', items );
-
-						items.imagesLoaded().progress( function( instance, image ) {
-							isotopeLayout( settings );
-
-							// Fix Layout
-							setTimeout(function() {
-								isotopeLayout( settings );
-								isotopeFilters( settings );
-							}, 10 );
-				
-							setTimeout(function() {
-								iGrid.addClass( 'grid-images-loaded' );
-							}, 500 );
+						iGrid.infiniteScroll({
+							path: scopeClass +' .wpr-grid-pagination a',
+							hideNav: navClass,
+							append: false,
+							history: false,
+							scrollThreshold: threshold,
+							status: scopeClass +' .page-load-status',
+							onInit: function() {
+								this.on( 'load', function() {
+									iGrid.removeClass( 'grid-images-loaded' );
+								});
+							}
 						});
 
-						// Loading
-						pagination.find( '.wpr-pagination-loading' ).hide();
+						// Request
+						iGrid.on( 'request.infiniteScroll', function( event, path ) {
+							pagination.find( '.wpr-load-more-btn' ).hide();
+							pagination.find( '.wpr-pagination-loading' ).css( 'display', 'inline-block' );
+						});
 
-						if ( settings.pagination_max_pages - 1 !== pagesLoaded ) {
-							if ( 'load-more' === settings.pagination_type ) {
-								pagination.find( '.wpr-load-more-btn' ).fadeIn();
+						// Load
+						var pagesLoaded = 0;
 
-								if ( $scope.find('.wpr-grid-filters').length ) {
-									if ( '*' !== $scope.find('.wpr-active-filter').attr('data-filter') ) {
-										if ( 0 < $scope.find('.wpr-active-filter').length ) {
-											let dataFilterClass = $scope.find('.wpr-active-filter').attr('data-filter').substring(1);
-											items.each(function() {
-												if ( !$(this).hasClass(dataFilterClass) ) {
-													loadedItems = false;
-												} else {
-													loadedItems = true;
-													return false;
+						iGrid.on( 'load.infiniteScroll', function( event, response ) {
+							pagesLoaded++;
+
+							// get posts from response
+							var items = $( response ).find( scopeClass ).find( '.wpr-grid-item' );
+
+							if ( $scope.find('.woocommerce-result-count').length ) {
+								var resultCount = $scope.find('.woocommerce-result-count').text();
+								var updatedResultCount = resultCount.replace( /\d\u2013\d+/, '1\u2013' + ( $scope.find('.wpr-grid-item').length + items.length ) );
+								$scope.find('.woocommerce-result-count').text(updatedResultCount);
+							}
+							
+							iGrid.infiniteScroll( 'appendItems', items );
+							iGrid.isotopewpr( 'appended', items );
+
+							items.imagesLoaded().progress( function( instance, image ) {
+								isotopeLayout( settings );
+
+								// Fix Layout
+								setTimeout(function() {
+									isotopeLayout( settings );
+									isotopeFilters( settings );
+								}, 10 );
+					
+								setTimeout(function() {
+									iGrid.addClass( 'grid-images-loaded' );
+								}, 500 );
+							});
+
+							// Loading
+							pagination.find( '.wpr-pagination-loading' ).hide();
+
+							if ( settings.pagination_max_pages - 1 !== pagesLoaded ) {
+								if ( 'load-more' === settings.pagination_type ) {
+									pagination.find( '.wpr-load-more-btn' ).fadeIn();
+
+									if ( $scope.find('.wpr-grid-filters').length ) {
+										if ( '*' !== $scope.find('.wpr-active-filter').attr('data-filter') ) {
+											if ( 0 < $scope.find('.wpr-active-filter').length ) {
+												let dataFilterClass = $scope.find('.wpr-active-filter').attr('data-filter').substring(1);
+												items.each(function() {
+													if ( !$(this).hasClass(dataFilterClass) ) {
+														loadedItems = false;
+													} else {
+														loadedItems = true;
+														return false;
+													}
+												});
+					
+												if ( !loadedItems ) {
+													$scope.find( '.wpr-grid' ).infiniteScroll( 'loadNextPage' );
 												}
-											});
-				
-											if ( !loadedItems ) {
-												$scope.find( '.wpr-grid' ).infiniteScroll( 'loadNextPage' );
 											}
 										}
 									}
 								}
+							} else {
+								pagination.find( '.wpr-pagination-finish' ).fadeIn( 1000 );
+								pagination.delay( 2000 ).fadeOut( 1000 );
+								setTimeout(function() {
+									pagination.find( '.wpr-pagination-loading' ).hide();
+								}, 500 );
 							}
-						} else {
-							pagination.find( '.wpr-pagination-finish' ).fadeIn( 1000 );
-							pagination.delay( 2000 ).fadeOut( 1000 );
+
+							// Init Likes
+							// No need for this anymore
+							// setTimeout(function() {
+							// 	postLikes( settings );
+							// }, 300 );
+
+							// Init Lightbox
+							lightboxPopup( settings );
+
+							// Fix Lightbox
+							iGrid.data( 'lightGallery' ).destroy( true );
+							iGrid.lightGallery( settings.lightbox );
+
+							// Init Media Hover Link
+							mediaHoverLink();
+
+							// Init Post Sharing
+							postSharing();
+
+							lazyLoadObserver();
+
+							// Maybe there is some other way
 							setTimeout(function() {
-								pagination.find( '.wpr-pagination-loading' ).hide();
-							}, 500 );
-						}
+								setEqualHeight(settings);
+								window.dispatchEvent(new Event('resize'));
+							}, 500);
+						});
 
-						// Init Likes
-						// No need for this anymore
-						// setTimeout(function() {
-						// 	postLikes( settings );
-						// }, 300 );
-
-						// Init Lightbox
-						lightboxPopup( settings );
-
-						// Fix Lightbox
-						iGrid.data( 'lightGallery' ).destroy( true );
-						iGrid.lightGallery( settings.lightbox );
-
-						// Init Media Hover Link
-						mediaHoverLink();
-
-						// Init Post Sharing
-						postSharing();
-
-						lazyLoadObserver();
-						// Maybe there is some other way
-						window.dispatchEvent(new Event('resize'));
-					});
-
-					pagination.find( '.wpr-load-more-btn' ).on( 'click', function() {
-						iGrid.infiniteScroll( 'loadNextPage' );
-						return false;
-					});
-
+						pagination.find( '.wpr-load-more-btn' ).on( 'click', function() {
+							iGrid.infiniteScroll( 'loadNextPage' );
+							return false;
+						});
+					} else {
+						$scope.find( '.wpr-load-more-btn' ).on( 'click', function() {
+							alert( 'Load More is Disabled in the Editor! Please Preview this Page to see it in action' );
+						});
+					}
 				}
 
 			// Slider
@@ -1969,7 +1983,7 @@
 						if ( ! WprElements.editorCheck() ) {
 							$(this).closest( 'article' ).find( '.wpr-grid-image-wrap' ).trigger( 'click' );
 						} else {
-							alert( 'Lightbox is Disabled in the Editor!' );
+							alert( 'Lightbox is Disabled in the Editor! Please Preview this Page to see it in action.' );
 						}
 					});
 				} else {
@@ -1978,7 +1992,7 @@
 							var imageWrap = $(this).closest( 'article' ).find( '.wpr-grid-image-wrap' );
 								imageWrap.trigger( 'click' );
 						} else {
-							alert( 'Lightbox is Disabled in the Editor!' );
+							alert( 'Lightbox is Disabled in the Editor! Please Preview this Page to see it in action.' );
 						}
 					});
 				}
@@ -4041,7 +4055,6 @@
 					$scope.find('.wpr-advanced-slider').css('height', $scope.find('.slick-current').outerHeight());
 				
 					$scope.find('.wpr-slider-arrow').on('click', function() {
-						console.log('works resize');
 						$scope.find('.wpr-advanced-slider').css('height', $scope.find('.slick-current').outerHeight());
 					});
 		
@@ -5108,7 +5121,7 @@
 					$(this).closest('.wpr-flip-box').addClass('wpr-flip-box-active');		   
 				});
 
-				$(window).on( 'click', function () {
+				$(window).on( 'click', function (event) {
 					if( $(event.target).closest('.wpr-flip-box').length === 0 ) {
 						$flipBox.removeClass('wpr-flip-box-active');
 					}
@@ -7308,7 +7321,7 @@
                         if ( ! WprElements.editorCheck() ) {
                             $(this).closest( '.wpr-insta-feed-content-wrap' ).find( '.wpr-insta-feed-image-wrap' ).trigger( 'click' );
                         } else {
-                            alert( 'Lightbox is Disabled in the Editor!' );
+                            alert( 'Lightbox is Disabled in the Editor! Please Preview this Page to see it in action.' );
                         }
                     });
                 } else {
@@ -7317,7 +7330,7 @@
                             var imageWrap = $(this).closest( '.wpr-insta-feed-content-wrap' ).find( '.wpr-insta-feed-image-wrap' );
                                 imageWrap.trigger( 'click' );
                         } else {
-                            alert( 'Lightbox is Disabled in the Editor!' );
+                            alert( 'Lightbox is Disabled in the Editor! Please Preview this Page to see it in action.' );
                         }
                     });
                 }
@@ -9258,6 +9271,16 @@
 				plusIconChild = !$scope.find('.wpr-add-to-cart-icons-wrap').length ? 'last-child' : 'first-child',
 				minusIconChild = !$scope.find('.wpr-add-to-cart-icons-wrap').length ? 'first-child' : 'last-child';
 
+			if ( WprElements.editorCheck() && $scope.find('select').length > 0 ) {
+				$scope.find('select').on('change', function() {
+					$scope.find('.reset_variations').css('visibility', 'visible');
+				});
+
+				$scope.find('.reset_variations').on('click', function() {
+					alert('Reset is Disabled in Editor. Please Preview this Page to see it in action.');
+				});
+			}
+
 			$scope.find('input.qty').each(function() {
 				if (!$(this).val()) {
 					$(this).val(0);
@@ -9697,7 +9720,8 @@
 				var animationSpeed = $scope.find('.wpr-mini-cart-wrap').data('animation');
 
 				$('body').on('click', function(e) {
-					if ( !e.target.classList.value.includes('wpr-mini-cart') && !e.target.closest('.wpr-mini-cart') ) {
+					if ( !e.target.classList.value.includes('wpr-mini-cart') && !e.target.closest('.wpr-mini-cart') ) {	
+						$scope.find('.wpr-mini-cart-toggle-btn').closest('.elementor>.elementor-element').removeClass('wpr-z-index');
 						if ( $scope.hasClass('wpr-mini-cart-slide') ) {
 							$scope.find('.wpr-mini-cart').slideUp(animationSpeed);
 						} else {
@@ -9740,6 +9764,7 @@
 							e.stopPropagation();
 							e.preventDefault();
 							if ( 'none' === $scope.find('.wpr-mini-cart').css("display") ) {
+								$(this).closest('.elementor>.elementor-element').addClass('wpr-z-index');
 								if ( $scope.hasClass('wpr-mini-cart-slide') ) {
 									$scope.find('.wpr-mini-cart').slideDown(animationSpeed);
 								} else {
@@ -9760,6 +9785,7 @@
 									}
 								}, animationSpeed + 100);
 							} else {
+								$(this).closest('.elementor>.elementor-element').removeClass('wpr-z-index');
 								if ( $scope.hasClass('wpr-mini-cart-slide') ) {
 									$scope.find('.wpr-mini-cart').slideUp(animationSpeed);
 								} else {
@@ -9927,6 +9953,10 @@
 		},
 
 		widgetDataTable: function($scope) {
+            
+            const ps = new PerfectScrollbar($scope.find('.wpr-table-inner-container')[0], {
+                // suppressScrollX: true
+            });
 			
 			var beforeFilter = $scope.find("tbody .wpr-table-row"),
 				itemsPerPage = +$scope.find('.wpr-table-inner-container').attr('data-rows-per-page'),

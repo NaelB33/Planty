@@ -945,6 +945,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-advanced-slider' => 'height: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-slider-item' => 'height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .slick-list' => 'height: {{SIZE}}{{UNIT}};'
 				],
 				'separator' => 'before',
 				'condition' => [
@@ -2841,6 +2842,14 @@ class Wpr_Advanced_Slider extends Widget_Base {
 			return '';
 		}
 
+		if ( defined('ICL_LANGUAGE_CODE') ) {
+			$default_language_code = apply_filters('wpml_default_language', null);
+
+			if ( ICL_LANGUAGE_CODE !== $default_language_code ) {
+				$id = icl_object_id($id, 'elementor_library', false, ICL_LANGUAGE_CODE);
+			}
+		}
+
 		$edit_link = '<span class="wpr-template-edit-btn" data-permalink="'. esc_url(get_permalink( $id )) .'">Edit Template</span>';
 		
 		$type = get_post_meta(get_the_ID(), '_wpr_template_type', true);
@@ -2859,12 +2868,20 @@ class Wpr_Advanced_Slider extends Widget_Base {
 		if ( empty( $settings['slider_items'] ) ) {
 			return;
 		}
+
+		$tags_whitelist = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div', 'span', 'p'];
+
+		$settings_slider_title_tag = Utilities::validate_html_tags_wl( $settings['slider_title_tag'], 'h2', $tags_whitelist );
+		$settings_slider_sub_title_tag = Utilities::validate_html_tags_wl( $settings['slider_sub_title_tag'], 'h3', $tags_whitelist );
 		
 		foreach ( $settings['slider_items'] as $key => $item ) {
 
 			if ( ! wpr_fs()->can_use_premium_code() && $key === 4 ) {
 				break;
 			}
+
+			$item_slider_title_tag = Utilities::validate_html_tags_wl( $item['slider_title_tag'], 'h2', $tags_whitelist );
+			$item_slider_sub_title_tag = Utilities::validate_html_tags_wl( $item['slider_sub_title_tag'], 'h3', $tags_whitelist );
 
 			if ( ! wpr_fs()->can_use_premium_code() ) {
 				if ( 'pro-3' == $settings['slider_amount'] || 'pro-4' == $settings['slider_amount'] || 'pro-5' == $settings['slider_amount'] || 'pro-6' == $settings['slider_amount'] ) {
@@ -2891,7 +2908,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 
 				$item_type = $item['slider_item_link_type'];
 				$item_url = isset($item['slider_item_bg_image_url']) ? $item['slider_item_bg_image_url']['url'] : '';
-				$btn_url_1 = $item['slider_item_btn_url_1']['url'];
+				$btn_url_1 = isset($item['slider_item_btn_url_1']) ? $item['slider_item_btn_url_1']['url'] : '';
 				$btn_element_1 = 'div';
 				$btn_attribute_1 = '';
 				$icon_html_1 = $item['slider_item_btn_text_1'];
@@ -2914,7 +2931,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 					$item_video_src = $item['hosted_url']['url'];
 				}
 
-				if ( '' !== $item['slider_item_btn_icon_1']['value'] ) {
+				if ( isset($item['slider_item_btn_icon_1']) && '' !== $item['slider_item_btn_icon_1']['value'] ) {
 					ob_start();
 					Icons_Manager::render_icon( $item['slider_item_btn_icon_1'], [ 'aria-hidden' => 'true' ] );
 					$icon_html_1 .= ob_get_clean();
@@ -2944,7 +2961,9 @@ class Wpr_Advanced_Slider extends Widget_Base {
 						
 						preg_match('![?&]{1}v=([^&]+)!', $item_video_src, $item_video_id );
 
-						$item_bg_image_url = 'https://i.ytimg.com/vi_webp/'. $item_video_id[1] .'/maxresdefault.webp';
+            if ( empty($item_bg_image_url) ) {
+              $item_bg_image_url = 'https://i.ytimg.com/vi_webp/'. $item_video_id[1] .'/maxresdefault.webp';
+            }
 						
 						if ( 'yes' === $item['slider_item_video_autoplay'] ) {
 							// GOGA - if there is no way to autoplay with api we need mute=1 for this purpose
@@ -3094,10 +3113,10 @@ class Wpr_Advanced_Slider extends Widget_Base {
 								//  Slider Title
 								if ( $settings['slider_title'] === 'yes' && ! empty( $item['slider_item_title'] ) ) {
 								$slider_html .= '<div class="wpr-slider-title">';
-									if ( '' !== $item['slider_title_tag'] ) {
-										$slider_html .= '<' . $item['slider_title_tag'] . '>'. wp_kses_post($item['slider_item_title']) .'</'. $item['slider_title_tag'] .'>';
+									if ( '' !== $item_slider_title_tag ) {
+										$slider_html .= '<' . $item_slider_title_tag . '>'. wp_kses_post($item['slider_item_title']) .'</'. $item_slider_title_tag .'>';
 									} else {
-										$slider_html .= '<' . $settings['slider_title_tag'] . '>'. wp_kses_post($item['slider_item_title']) .'</'. $settings['slider_title_tag'] .'>';
+										$slider_html .= '<' . $settings_slider_title_tag . '>'. wp_kses_post($item['slider_item_title']) .'</'. $settings_slider_title_tag .'>';
 									}
 								$slider_html .= '</div>';
 								}	
@@ -3105,10 +3124,10 @@ class Wpr_Advanced_Slider extends Widget_Base {
 								// Slider Sub Title
 								if ( $settings['slider_sub_title'] === 'yes' && ! empty( $item['slider_item_sub_title'] ) ) {
 								$slider_html .= '<div class="wpr-slider-sub-title">';
-									if ( '' !== $item['slider_sub_title_tag'] ) {
-										$slider_html .= '<' . $item['slider_sub_title_tag'] . '>'. wp_kses_post($item['slider_item_sub_title']) .'</' . $item['slider_sub_title_tag'] . '>';
+									if ( '' !== $item_slider_sub_title_tag ) {
+										$slider_html .= '<' . $item_slider_sub_title_tag . '>'. wp_kses_post($item['slider_item_sub_title']) .'</' . $item_slider_sub_title_tag . '>';
 									} else {
-										$slider_html .= '<' . $settings['slider_sub_title_tag'] . '>'. wp_kses_post($item['slider_item_sub_title']) .'</' . $settings['slider_sub_title_tag'] . '>';
+										$slider_html .= '<' . $settings_slider_sub_title_tag . '>'. wp_kses_post($item['slider_item_sub_title']) .'</' . $settings_slider_sub_title_tag . '>';
 									}
 								$slider_html .= '</div>';
 								}							

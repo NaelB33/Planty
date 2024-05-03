@@ -284,7 +284,7 @@ class WPR_Templates_Data {
 			],
 			'wooshop' => [
 				'v1' => [
-					'name' => 'Woo Shop',
+					'name' => 'Woo Shop V1',
 					'pages' => 'home,shop,single-product,about,contact,',
 					'plugins' => '{"woocommerce":'. $is_woo_active .'}',
 					'tags' => 'free shop shopping woo-commerce woocommerce estore ecommerce shop ecommerce product online shop online store boutique clothes eshopping fashion designer market reseller digital purchases e commerce',
@@ -294,6 +294,20 @@ class WPR_Templates_Data {
 					'price' => $is_pro_active ? 'free' : 'free',
 					'label' => '',
 					'priority' => 3,
+				],
+			],
+			'shop-wooshop' => [
+				'v2' => [
+					'name' => 'Woo Shop V2',
+					'pages' => 'home,shop,single-product,about,cart,contact,',
+					'plugins' => '{"woocommerce":'. $is_woo_active .'}',
+					'tags' => 'free shop shopping woo-commerce woocommerce estore ecommerce shop ecommerce product online shop online store boutique clothes eshopping fashion designer market reseller digital purchases e commerce',
+					'theme-builder' => true,
+					'woo-builder' => true,
+					'off-canvas' => false,
+					'price' => $is_pro_active ? 'free' : 'free',
+					'label' => 'New',
+					'priority' => 4,
 				],
 			],
 			'woo-auto-parts' => [
@@ -449,6 +463,18 @@ class WPR_Templates_Data {
 					'woo-builder' => true,
 					'off-canvas' => true,
 					'price' => $is_pro_active ? 'free' : 'pro',
+					'label' => 'new',
+					'priority' => 6,
+				],
+				'v6' => [
+					'name' => 'Magazine Blog v6',
+					'pages' => 'home,category,single-blog,contact,',
+					'plugins' => '{}',
+					'tags' => 'blogger blog posts content news newspaper journal magazine business blog publishing theme builder sports grid slider magazine',
+					'theme-builder' => true,
+					'woo-builder' => false,
+					'off-canvas' => true,
+					'price' => $is_pro_active ? 'free' : 'free',
 					'label' => 'new',
 					'priority' => 6,
 				],
@@ -779,6 +805,20 @@ class WPR_Templates_Data {
 					'priority' => 91,
 				],
 			],
+			'pet-shop' => [
+				'v1' => [
+					'name' => 'Pet Shop V1',
+					'pages' => 'home,shop,single-product,cart,blog,single-blog,about,contact,',
+					'plugins' => '{"woocommerce":'. $is_woo_active .'}',
+					'tags' => 'shop shopping woo-commerce woocommerce estore store ecommerce product ecommerce shop online pet shop petshop purchases e commerce free pet care dog care grooming pet minding pet sitting pet training pet walking cat animal dogs dog training',
+					'theme-builder' => true,
+					'woo-builder' => true,
+					'off-canvas' => false,
+					'price' => $is_pro_active ? 'free' : 'free',
+					'label' => 'new',
+					'priority' => 92,
+				],
+			],
 			'travel' => [
 				'v1' => [
 					'name' => 'Travel Blogger & Influencer',
@@ -792,6 +832,18 @@ class WPR_Templates_Data {
 					'label' => '',
 					'priority' => 100,
 				],
+				'v3' => [
+					'name' => 'Travel V3',
+					'pages' => 'home,about,tours,tours-details,gallery,blog,single-blog,contact,',
+					'plugins' => '{}',
+					'tags' => 'nature influencer travel content slider tourism influencers creator travel forest slider generic multipurpose national-park nature-park sanctuary wilderness hitchhiking mountain river lakes outdoors travel agency company office travel service',
+					'theme-builder' => true,
+					'woo-builder' => false,
+					'off-canvas' => true,
+					'price' => $is_pro_active ? 'free' : 'free',
+					'label' => 'new',
+					'priority' => 10,
+				]
 			],
 			'cybersecurity' => [
 				'v1' => [
@@ -939,6 +991,35 @@ class WPR_Templates_Data {
 					'price' => $is_pro_active ? 'free' : 'free',
 					'label' => '',
 					'priority' => 2,
+				],
+			],
+			'digital-marketing' => [
+				'v1' => [
+					'name' => 'Digital Marketing V1 - One Page',
+					'pages' => 'home,features,analytics,pricing,book-demo,contact',
+					'plugins' => '{}',
+					'tags' => 'digital agency company corporate digital services office agency web digital marketing seo social media branding landing page onepage one page',
+					'theme-builder' => true,
+					'woo-builder' => false,
+					'off-canvas' => true,
+					'price' => $is_pro_active ? 'free' : 'free',
+					'label' => 'new',
+					'priority' => 10,
+				],
+			],
+			'jewelry' => [
+				'v1' => [
+					'name' => 'Jewelry Shop',
+					'pages' => 'home,shop,single-product,cart,compare,wishlist,about,about-me,faq,blog,contact,',
+					'plugins' => '{"woocommerce":'. $is_woo_active .'}',
+					'tags' => 'shop shopping woo-commerce woocommerce estore ecommerce product online eshopping market ecommerce shop e commerce jewelry fashion store luxury diamond earrings gold jewelry care watch permanent jewelry diamond gold necklace ring earrings bracelet',
+					'theme-builder' => true,
+					'woo-builder' => true,
+					'off-canvas' => false,
+					'price' => $is_pro_active ? 'free' : 'pro',
+					'expert' => $is_expert ? 'free' : 'expert',
+					'label' => 'new',
+					'priority' => 5,
 				],
 			],
 			'drone' => [
@@ -1159,7 +1240,7 @@ class WPR_Templates_Data {
 			],
 			'solar-energy' => [
 				'v1' => [
-					'name' => 'Solar Energy',
+					'name' => 'Solar Energy v1',
 					'pages' => 'home,about,services,detail-service,projects,team,blog,contact,',
 					'plugins' => '{}',
 					'tags' => 'wind turbines photovoltaic green energy solar energy panel sustainable clean eco technology solar solutions solar power electronic electricity sun solar panels solar cells solar inverters solar batteries renewable energy sustainable energy solar module solar system solar inverter solar charger residential solar commercial solar water heating wind energy Renewable energy Wind power Wind farm',
@@ -1169,6 +1250,18 @@ class WPR_Templates_Data {
 					'price' => $is_pro_active ? 'free' : 'free',
 					'label' => 'new',
 					'priority' => 500,
+				],
+				'v2' => [
+					'name' => 'Solar Energy v2',
+					'pages' => 'home,about-us,services,projects,team,faq,blog,single-blog,contact,',
+					'plugins' => '{}',
+					'tags' => 'wind turbines photovoltaic green energy solar energy panel sustainable clean eco technology solar solutions solar power electronic electricity sun solar panels solar cells solar inverters solar batteries renewable energy sustainable energy solar module solar system solar inverter solar charger residential solar commercial solar water heating wind energy Renewable energy Wind power Wind farm',
+					'theme-builder' => true,
+					'woo-builder' => false,
+					'off-canvas' => true,
+					'price' => $is_pro_active ? 'free' : 'free',
+					'label' => 'new',
+					'priority' => 501,
 				],
 			],
 			'winebar' => [
@@ -1190,13 +1283,27 @@ class WPR_Templates_Data {
 					'name' => 'Landing Page - Dance Studio',
 					'pages' => 'home,classes,instructors,gallery,blog,contact',
 					'plugins' => '{}',
-					'tags' => 'free single-page landing page one page onepage landingpage dance studio dancing dance school ballet contempo dance club fitness salsa zumba academy courses dancer music tango academy street dance jazz hiphop',
+					'tags' => 'free single-page landing page one page onepage landingpage dance studio dancing dance school ballet contempo dance club fitness salsa zumba academy courses dancer music tango academy street dance jazz hiphop education',
 					'theme-builder' => true,
 					'woo-builder' => false,
 					'off-canvas' => true,
 					'price' => $is_pro_active ? 'free' : 'free',
 					'label' => 'new',
 					'priority' => 200,
+				],
+			],
+			'school' => [
+				'v1' => [
+					'name' => 'Children School V1',
+					'pages' => 'home,about,classes,class-details,teachers,teacher-details,events,event-details,blog,single-blog,gallery,contact,',
+					'plugins' => '{}',
+					'tags' => 'free school education online-education learning homework educator teacher classes dance daycare elementary school home school kindergarten nursery preschool child children babysister childcare day care preschool baby sister daycare',
+					'theme-builder' => true,
+					'woo-builder' => false,
+					'off-canvas' => false,
+					'price' => $is_pro_active ? 'free' : 'free',
+					'label' => 'new',
+					'priority' => 10,
 				],
 			],
 			'barbershop' => [
@@ -1307,9 +1414,15 @@ class WPR_Templates_Data {
 				'price' => $is_pro_active ? 'free' : 'pro',
 			],
 			'solar-energy-v1' => [
-				'name' => 'Solar Energy',
+				'name' => 'Solar Energy 1',
 				'pages' => ['home','about','services','detail-service','projects','team','blog','contact'],
 				'preview' => ['home','about','services','detail-service','projects','team','blog','contact'],
+				'price' => $is_pro_active ? 'free' : 'free',
+			],
+			'solar-energy-v2' => [
+				'name' => 'Solar Energy 2',
+				'pages' => ['home','about-us','services','projects','team','faq','blog','contact,'],
+				'preview' => ['home','about-us','services','projects','team','faq','blog','contact,'],
 				'price' => $is_pro_active ? 'free' : 'free',
 			],
 			'construction-v3' => [
@@ -1394,6 +1507,12 @@ class WPR_Templates_Data {
 				'name' => 'Pet Care',
 				'pages' => ['home','about','services','reviews','contact'],
 				'preview' => ['home','about','services','reviews','contact'],
+				'price' => $is_pro_active ? 'free' : 'free',
+			],
+			'pet-shop-v1' => [
+				'name' => 'Pet Shop V1',
+				'pages' => ['home','shop','cart','blog','about','contact'],
+				'preview' => ['home','shop','cart','blog','about','contact'],
 				'price' => $is_pro_active ? 'free' : 'free',
 			],
 			'car-repair-v1' => [
@@ -1600,10 +1719,28 @@ class WPR_Templates_Data {
 				'preview' => ['home','about','services','blog','gallery','rsvp'],
 				'price' => $is_pro_active ? 'free' : 'free',
 			],
+			'school-v1' => [
+				'name' => 'School - V1',
+				'pages' => ['home','about','classes','class-details','teachers','teacher-details','events','event-details','blog','gallery','contact'],
+				'preview' => ['home','about','classes','class-details','teachers','teacher-details','events','event-details','blog','gallery','contact'],
+				'price' => $is_pro_active ? 'free' : 'free',
+			],
 			'portfolio-v1' => [
 				'name' => 'Portfolio/CV',
 				'pages' => ['home','about','portfolio','contact'],
 				'preview' => ['home','about','portfolio','contact'],
+				'price' => $is_pro_active ? 'free' : 'free',
+			],
+			'jewelry-v1' => [
+				'name' => 'Jewelry Shop',
+				'pages' => ['home','shop','cart','compare','wishlist','about','about-me','faq','blog','contact'],
+				'preview' => ['home','shop','cart','compare','wishlist','about','about-me','faq','blog','contact'],
+				'price' => $is_pro_active ? 'free' : 'pro',
+			],
+			'travel-v3' => [
+				'name' => 'Travel V3',
+				'pages' => ['home','about','tours','tours-details','gallery','blog','contact'],
+				'preview' => ['home','about','tours','tours-details','gallery','blog','contact'],
 				'price' => $is_pro_active ? 'free' : 'free',
 			],
 			'pizza-v1' => [

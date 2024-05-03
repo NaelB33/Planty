@@ -63,10 +63,13 @@ class WPR_WooCommerce_Config {
 	}
 
 	function wpr_custom_quantity_step( $args, $product ) {
-		$args['input_value'] = 8; // Start from this value
-		$args['max_value'] = 80;  // Maximum value
-		$args['min_value'] = 8;   // Minimum value
-		$args['step'] = 8;        // Increment/decrement by this value
+    if ( $args['input_value'] < 8 ) {
+      $args['input_value'] = 8;  // Start from this value
+    }
+		// $args['max_value'] = 80;  // Maximum value
+		$args['min_value'] = 8;  // Minimum value
+		$args['step'] = 8;  // Increment/decrement by this value
+
 		return $args;
 	}
 		
@@ -117,7 +120,7 @@ class WPR_WooCommerce_Config {
 		ob_start();
 		$items_count = WC()->cart->get_cart_contents_count();
 		?>
-		<span class="wpr-mini-cart-icon-count <?php echo $items_count ? '' : 'wpr-mini-cart-icon-count-hidden'; ?>"><?php echo $items_count ? $items_count : '0'; ?></span>
+		<span class="wpr-mini-cart-icon-count <?php echo $items_count ? '' : 'wpr-mini-cart-icon-count-hidden'; ?>"><span><?php echo $items_count ? $items_count : '0'; ?></span></span>
 		<?php
 		$fragments['.wpr-mini-cart-icon-count'] = ob_get_clean();
 
